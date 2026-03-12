@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 st.set_page_config(
     page_title="考勤管理系统",
     page_icon="📋",
-    layout="mobile"  # 手机友好
+    layout="wide"  # 手机友好
 )
 
 # ============ 数据存储文件 ============

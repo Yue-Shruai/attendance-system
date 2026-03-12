@@ -116,6 +116,44 @@ def main():
                     st.success(f"已保存 {len(selected_students)} 人的考勤记录")
                 else:
                     st.warning("请至少选择一个学生")
+        
+        # ============ 删除考勤 ============
+        st.divider()
+        st.subheader("删除考勤记录")
+        
+        if data["attendance"]:
+            # 按日期倒序显示
+            sorted_attendance = sorted(data["attendance"], key=lambda x: x["date"], reverse=True)
+            
+            for idx, record in enumerate(sorted_attendance):
+                with st.expander(f"📅 {record['date']} ({len(record['students'])}人)"):
+                    for student in record["students"]:
+                        col1, col2 = st.columns([4, 1])
+                        with col1:
+                            st.write(f"• {student}")
+                        with col2:
+                            if st.button("删除", key=f"del_att_{record['date']}_{student}", use_container_width=True):
+                                # 弹出确认框
+                                confirm_key = f"confirm_{record['date']}_{student}"
+                                if st.session_state.get(confirm_key, False):
+                                    # 确认删除
+                                    for i, r in enumerate(data["attendance"]):
+                                        if r["date"] == record["date"]:
+                                            if student in r["students"]:
+                                                r["students"].remove(student)
+                                                if not r["students"]:
+                                                    data["attendance"].remove(r)
+                                                save_data(data)
+                                                st.session_state[confirm_key] = False
+                                                st.rerun()
+                                else:
+                                    # 显示确认框
+                                    st.session_state[confirm_key] = True
+                                    st.warning(f"确定删除 {student} 在 {record['date']} 的考勤记录？")
+                                    if st.button("确定删除", key=f"yes_{record['date']}_{student}"):
+                                        pass  # 下一次按钮点击会处理
+        else:
+            st.info("暂无考勤记录")
     
     # ============ 查询统计 ============
     with tab3:

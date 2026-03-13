@@ -1,4 +1,13 @@
 {
-  "students": [],
-  "attendance": []
+  "students": [
+    "朵朵"
+  ],
+  "attendance": [
+    {
+      "date": "2026-03-13",
+      "students": [
+        "朵朵"
+      ]
+    }
+  ]
 }

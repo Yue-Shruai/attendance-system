@@ -141,7 +141,7 @@ def main():
                     count = 0
                     dates = []
                     for record in data["attendance"]:
-                        record_date = datetime.strptime(record["date"], "%Y-%m-%d")
+                        record_date = datetime.strptime(record["date"], "%Y-%m-%d").date()
                         if start_date <= record_date <= end_date:
                             if selected_student in record["students"]:
                                 count += 1

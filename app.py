@@ -32,8 +32,13 @@ def load_data():
 
 def save_data(data):
     """保存数据"""
-    with open(DATA_FILE, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    try:
+        with open(DATA_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        return True
+    except Exception as e:
+        st.error(f"保存失败: {e}")
+        return False
 
 # ============ 主界面 ============
 def main():
